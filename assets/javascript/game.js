@@ -38,7 +38,7 @@ var theGame = {
         this.guessesRemaining = 11;
     },
 
-    checkRepeat: function () {
+    cehckGameAgain: function () {
         var repeatCounter = -1;
 
         //Loops for the number of guesses previously made showing how many times.
@@ -57,7 +57,7 @@ var theGame = {
             this.incorrectLetter = true;
         }
     },
-    checkMatch: function () {
+    cehckGame: function () {
         var matchCounter = 0;
 
         //Loop for the band names length amount of times.
@@ -76,7 +76,7 @@ var theGame = {
             this.correctLetter = true;
         }
     },
-    match_repeatComparison: function () {
+    gameIsLookingForSameLetter: function () {
         //If the same key is pressed twice, it is removed from all guesses.
         if (this.incorrectLetter == true) {
             this.allGuesses.pop(this.currentLetter);
@@ -92,7 +92,7 @@ var theGame = {
             this.guessesRemaining--;
         }
     },
-    revealBand: function () {
+    revealWordChoice: function () {
         //If there are no correct guesses,
         //For the number of letters in the word bank, fill the displayed guesses with an underscore.
         if (this.correctGuesses.length == 0) {
@@ -144,7 +144,7 @@ var theGame = {
         }
         //If the number of guesses remaining is zero, the user has lost.
         if (this.guessesRemaining == 0) {
-            alert("You lose!");
+            alert("You lose, Press scape bar to play again!");
             this.lostGame++;
             this.generateWord();
         }
@@ -170,6 +170,10 @@ document.onkeyup = function (q) {
 
     }
 
+    if (userStartedGameOnce == false) {
+        return;
+    }
+
     theGame.allGuesses.push(theGame.currentLetter);
 
     console.log("Current Word: " + theGame.currentLetter + "\n" + "Word Bank: " + theGame.generatedLetter + "\n" + "All Guesses: " + theGame.allGuesses);
@@ -177,19 +181,19 @@ document.onkeyup = function (q) {
 
     //The Game checks to see if the letter has been typed before.
     //The Game checks to see if the letter matches with one in the word bank.
-    theGame.checkRepeat();
-    theGame.checkMatch();
+    theGame.cehckGameAgain();
+    theGame.cehckGame();
 
 
     //This function determines which array to push the current letter into.
-    theGame.match_repeatComparison();
+    theGame.gameIsLookingForSameLetter();
 
     console.log("Correct Guesses: " + theGame.correctGuesses);
     console.log("Incorrect Guesses: " + theGame.incorrectGuesses);
     console.log("Guesses Remaining:" + theGame.guessesRemaining);
 
     // The game reveals the word bank answer as it is being guessed.
-    theGame.revealBand();
+    theGame.revealWordChoice();
     console.log(theGame.correctGuessesYouHaveGotInOrder);
 
     //Check to see if the game is still in progress or if a win/lose has happened
